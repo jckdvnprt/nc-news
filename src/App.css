@@ -5,6 +5,15 @@
   text-align: center;
 }
 
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000; 
+  text-align: center;
+}
+
 .logo {
   height: 6em;
   padding: 1.5em;
@@ -22,4 +31,31 @@
 .card {
   padding: 2em;
 }
+
+
+
+.footer {
+  background-color: #333;
+  color: #fff; 
+  padding: 2px; 
+  text-align: center; 
+  position: fixed; 
+  width: auto; 
+  height: 50px; 
+  bottom: 0; 
+  left: 0; 
+  right: 0;
+  margin-left: auto; 
+  margin-right: auto; 
+}
+.footer a {
+  color: #fff; 
+  text-decoration: none; 
+}
+
+.footer a:hover {
+  text-decoration: underline; 
+}
+
+
 

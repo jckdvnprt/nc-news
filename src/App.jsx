@@ -1,25 +1,20 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React from 'react';
+import Header from './Components/Header';
+import './App.css';
+import Footer from './Components/Footer';
 
 function App() {
-
-
   return (
-    <>
-      <div>
+    <div>
+      <div className="header">
+        <Header />
       </div>
-      <h1>Northcoders News</h1>
-      <div className="card">
-        <img src="../images/logo.png" alt="Logo" />
-        <h3>News news news news</h3>
+      <div className="footer">
+        {/* Footer content goes here */}
+        <Footer />
       </div>
-      <p className="welcome">
-        Welcome to the home of all things news!
-      </p>
-    </>
-  )
+    </div>
+  );
 }
 
-export default App
+export default App;
