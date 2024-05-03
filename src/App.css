@@ -14,18 +14,22 @@
   text-align: center;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
+.headerImage {
+  width: 24%; 
+  height: 5%; 
+
+  animation: pulse 2s infinite alternate;
 }
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+@keyframes pulse {
+  from {
+    transform: scale(1); 
+  }
+  to {
+    transform: scale(0.94); 
+  }
 }
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
+
+
 
 
 .card {

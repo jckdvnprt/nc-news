@@ -10,7 +10,6 @@ function App() {
         <Header />
       </div>
       <div className="footer">
-        {/* Footer content goes here */}
         <Footer />
       </div>
     </div>
