@@ -12,19 +12,18 @@ function IndividualArticleCard() {
   const [showComments, setShowComments] = useState(false); 
 
   useEffect(() => {
-    fetchArticleById(id)
-      .then(article => {
+    Promise.all([fetchArticleById(id), fetchCommentsById(id)])
+      .then(([article, comments]) => {
         setArticle(article);
+        setArticleComments(comments);
+        setLoading(false);
+      })
+      .catch(error => {
+        setError(error);
         setLoading(false);
       });
-  }, [id]); 
-
-  useEffect(() => {
-    fetchCommentsById(id)
-      .then(comments => {
-        setArticleComments(comments);
-      });
-  }, [id]); 
+  }, [id]);;
+  
 
   const toggleComments = () => {
     setShowComments(!showComments); 
