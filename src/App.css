@@ -30,7 +30,7 @@
 
 .articles-list {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(4, 2fr);
   grid-gap: 20px;
   list-style: none;
 }
@@ -41,6 +41,7 @@
 }
 .article h3 {
   margin-top: 0;
+  
 }
 .article p {
   margin: 0;
@@ -49,7 +50,12 @@
   max-width: 100%;
   height: auto;
   display: block; 
-  margin: 0 auto; 
+  margin: 0 auto;
+  transition: transform 0.1s ease; 
+}
+
+.article img:hover {
+  transform: scale(1.05); 
 }
 
 .single-article {
@@ -112,6 +118,30 @@ text-align: justify;
   background-color: #0056b3; 
 }
 
+.vote-button {
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  margin: 5px;
+  cursor: pointer;
+  float: left;
+}
+
+.vote-button:hover {
+  background-color: #0056b3;
+}
+
+.vote-button.upvoted {
+  background-color: #28a745;
+}
+
+.vote-button.downvoted {
+  background-color: #dc3545;
+}
+
 .footer {
   background-color: #333;
   color: #fff;
@@ -136,3 +166,5 @@ text-align: justify;
     height: 70px; 
   }
 }
+
+

@@ -25,6 +25,7 @@ function ArticlesList() {
               {article.article_img_url && <img src={article.article_img_url} alt={article.title} />}
               <p>Author: {article.author}</p>
               <p>Published: {article.created_at}</p>
+              <p>Votes: {article.votes}</p>
             </li>
           ))}
         </ul>
