@@ -149,11 +149,7 @@ text-align: justify;
   justify-content: space-around; 
 }
 
-.clearfix:after {
-  content: "";
-  display: table;
-  clear: both;
-}
+
 
 .footer {
   background-color: #333;
@@ -176,8 +172,6 @@ text-align: justify;
 
 @media screen and (max-width: 768px) {
   .footer {
-    height: 33px; 
+    height: 3px; 
   }
 }
-
-

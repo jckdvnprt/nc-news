@@ -29,17 +29,30 @@ function IndividualArticleCard() {
   const toggleComments = () => {
     setShowComments(!showComments);
   };
-  const handleVote = async (voteType) => {
-    try {
-      const newVoteType = userVote === voteType ? null : voteType;
-      const updatedVotes = await updateVotes(id, newVoteType);
-      setCurrentVotes(updatedVotes); 
-      setUserVote(newVoteType);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-  
+
+const handleVote = async (voteType) => {
+  try {
+    const newVoteType = userVote === voteType ? null : voteType;
+    setUserVote(newVoteType);
+
+    setCurrentVotes((prevVotes) => {
+      if (userVote === 'up') {
+        return voteType === 'up' ? prevVotes - 1 : prevVotes; 
+      } else if (userVote === 'down') {
+        return voteType === 'down' ? prevVotes + 1 : prevVotes; 
+      } else if (voteType === 'up') {
+        return prevVotes + 1; 
+      } else if (voteType === 'down') {
+        return prevVotes - 1; 
+      }
+      return prevVotes;
+    });
+
+    await updateVotes(id, newVoteType);
+  } catch (error) {
+    console.error(error);
+  }
+};
 
   return (
     <div>
@@ -53,7 +66,6 @@ function IndividualArticleCard() {
           <p>Author: {article.author}</p>
           <p>Published: {article.created_at}</p>
           <p>Votes: {currentVotes}</p>
-
           <div className="voting-buttons" style={{ width: '150px' }}> 
             {userVote === 'up' ? (
               <button className={`vote-button upvoted`} onClick={() => handleVote('up')}>
@@ -64,7 +76,6 @@ function IndividualArticleCard() {
                 {'Upvote'}
               </button>
             )}
-
             {userVote === 'down' ? (
               <button className={`vote-button downvoted`} onClick={() => handleVote('down')}>
                 {' Downvoted 👎 '}
@@ -75,11 +86,9 @@ function IndividualArticleCard() {
               </button>
             )}
           </div>
-          <div className="clearfix"></div>  {/* Added to clear layout after voting buttons */}
           <button className="toggle-button" onClick={toggleComments}>
-            {showComments ? 'Hide Comments' : 'Show Comments'}
+            {showComments ? 'Hide Comments 🫣 ' : 'Show Comments🔎'}
           </button>
-
           {showComments && (
             <div className="comments">
               <h3>Comments</h3>
