@@ -11,6 +11,7 @@
   width: 100%;
   z-index: 1000; 
   text-align: center;
+
 }
 .headerImage {
   width: 24%; 
@@ -34,7 +35,7 @@
   list-style: none;
 }
 .article {
-  border: 2px solid #000000;
+  border: 2px solid #969696;
   padding: 20px;
   text-align: center; 
 }
@@ -55,6 +56,7 @@
   padding: 20px;
   margin-bottom: 20px;
   width: auto;
+  padding-bottom: 10px;
 }
 .single-article h2 {
   margin-top: 0;
@@ -62,7 +64,7 @@
 }
 .single-article p {
 margin: 0 0 10px 0;
-padding: 20px;
+padding: 1px;
 text-align: justify;
 }
 .single-article img {
@@ -73,10 +75,47 @@ text-align: justify;
   border-radius: 10px; 
 }
 
+.comments {
+  margin-left: 40px;
+  margin-top: 20px;
+}
+.comments ul {
+  list-style: none;
+  padding: 0;
+}
+.comment-body {
+  font-size: 16px;
+  margin-bottom: 2px;
+  background-color: #073a70;
+
+}
+.comment-info {
+  font-size: 12px;
+  color: #ffffff;
+  margin-bottom: 2px;
+}
+.comment-votes {
+  font-size: 11px;
+  color:#e25b0c
+}
+
+.toggle-button {
+  background-color: #007bff; 
+  color: #fff; 
+  padding: 10px 30px; 
+  border: none; 
+  border-radius: 10px; 
+  font-size: 16px; 
+  margin-top: 1px; 
+}
+.toggle-button:hover {
+  background-color: #0056b3; 
+}
+
 .footer {
   background-color: #333;
   color: #fff;
-  padding: 10px; 
+  padding: 1px; 
   text-align: center;
   position: fixed;
   width: 100%;
