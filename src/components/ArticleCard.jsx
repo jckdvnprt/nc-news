@@ -19,6 +19,7 @@ function IndividualArticleCard() {
   const [newCommentAuthor, setNewCommentAuthor] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+  const [commentSubmitted, setCommentSubmitted] = useState(false);
 
   useEffect(() => {
     Promise.all([fetchArticleById(id), fetchCommentsById(id), getArticleVotes(id)])
@@ -72,6 +73,8 @@ function IndividualArticleCard() {
       setArticleComments(updatedComments);
       setNewCommentBody('');
       setNewCommentAuthor('');
+      setErrorMessage('');
+      setCommentSubmitted(true);
     } catch (error) {
       setErrorMessage('Error occurred while submitting comment. Please try again later.');
       console.error(error);
@@ -124,32 +127,36 @@ function IndividualArticleCard() {
                 ))}
               </ul>
 
-  <form onSubmit={handleCommentSubmit} className="comment-form">
-  <div className="form-group">
-    <label htmlFor="comment">Comment:</label>
-    <textarea
-      id="comment"
-      value={newCommentBody}
-      onChange={(e) => setNewCommentBody(e.target.value)}
-      style={{ height: '100px', width: '300px' }}
-    />
-  </div>
-  <div className="form-group">
-    <label htmlFor="username">Username:</label>
-    <input
-      id="username"
-      type="text"
-      value={newCommentAuthor}
-      onChange={(e) => setNewCommentAuthor(e.target.value)}
-    />
-  </div>
-  {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
-  <button type="submit" disabled={isSubmitting}>
-    {isSubmitting ? 'Submitting...' : 'Submit Comment'}
-  </button>
-</form>
-
-
+              <form onSubmit={handleCommentSubmit} className="comment-form">
+                <div className="form-group">
+                  <label htmlFor="comment">Comment:</label>
+                  <textarea
+                    id="comment"
+                    value={newCommentBody}
+                    onChange={(e) => setNewCommentBody(e.target.value)}
+                    style={{ height: '100px', width: '300px' }}
+                  />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="username">Username:</label>
+                  <input
+                    id="username"
+                    type="text"
+                    value={newCommentAuthor}
+                    onChange={(e) => setNewCommentAuthor(e.target.value)}
+                  />
+                </div>
+                {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
+                {isSubmitting ? (
+                  <p>Submitting...</p>
+                ) : (
+                  commentSubmitted ? (
+                    <p>Thank you for submitting your lovely comment!</p>
+                  ) : (
+                    <button type="submit">Submit Comment</button>
+                  )
+                )}
+              </form>
             </div>
           )}
         </div>

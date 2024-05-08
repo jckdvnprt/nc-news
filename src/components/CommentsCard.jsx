@@ -10,5 +10,4 @@ function CommentCard({ comment }) {
     </li>
   );
 }
-
 export default CommentCard;
