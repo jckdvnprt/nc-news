@@ -28,6 +28,27 @@
   }
 }
 
+.navigation-buttons {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 0px;
+}
+
+.navigation-buttons button {
+  margin: 0 10px;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: hsl(0, 0%, 100%);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.navigation-buttons button:hover {
+  background-color: #0056b3;
+}
+
+
 .articles-list {
   display: grid;
   grid-template-columns: repeat(4, 2fr);
@@ -149,8 +170,6 @@ text-align: justify;
   justify-content: space-around; 
 }
 
-
-
 .footer {
   background-color: #333;
   color: #fff;
@@ -175,3 +194,4 @@ text-align: justify;
     height: 3px; 
   }
 }
+
