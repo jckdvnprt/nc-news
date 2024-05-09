@@ -4,6 +4,7 @@ import { fetchArticles } from '../utils/api';
 import { sortArticles } from '../utils/sorting'; 
 import DropDownMenu from './DropDownMenu'
 
+
 function ArticlesList() {
   const [loading, setLoading] = useState(true);
   const [articles, setArticles] = useState([]);
@@ -37,6 +38,7 @@ function ArticlesList() {
 
   return (
     <div>
+      
       <DropDownMenu sortBy={sortBy} sortOrder={sortOrder} handleSortChange={handleSortChange} />
       {loading ? (<h4>Loading NC News...</h4>) : (
         <ul className="articles-list">
