@@ -1,21 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { fetchArticles } from '../utils/api';
-import { sortArticles } from '../utils/sorting'; 
+import { fetchArticlesByTopic } from '../utils/fetchArticlesByTopic';
+import { sortArticles } from '../utils/sorting';
 import DropDownMenu from './DropDownMenu'
 
-function ArticlesList() {
+function TopicArticlesList({ topic }) {
   const [loading, setLoading] = useState(true);
   const [articles, setArticles] = useState([]);
   const [sortBy, setSortBy] = useState('date');
   const [sortOrder, setSortOrder] = useState('desc');
+  const topicName = topic.charAt(0).toUpperCase() + topic.slice(1);
+
 
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const articlesData = await fetchArticles();
-        const sortedArticles = sortArticles(articlesData, sortBy, sortOrder); 
+        const articlesData = await fetchArticlesByTopic(topic);
+        const sortedArticles = sortArticles(articlesData, sortBy, sortOrder);
         setArticles(sortedArticles);
         setLoading(false);
       } catch (error) {
@@ -24,7 +26,7 @@ function ArticlesList() {
       }
     };
     fetchData();
-  }, [sortBy, sortOrder]);
+  }, [sortBy, sortOrder, topic]); 
 
   const handleSortChange = (e) => {
     const { name, value } = e.target;
@@ -37,8 +39,9 @@ function ArticlesList() {
 
   return (
     <div>
+      <h2>{topicName} Articles</h2>
       <DropDownMenu sortBy={sortBy} sortOrder={sortOrder} handleSortChange={handleSortChange} />
-      {loading ? (<h4>Loading NC News...</h4>) : (
+      {loading ? (<h4>Loading {topic} articles...</h4>) : (
         <ul className="articles-list">
           {articles.map(article => (
             <li key={article.article_id} className="article">
@@ -54,4 +57,5 @@ function ArticlesList() {
     </div>
   );
 }
-export default ArticlesList;
+
+export default TopicArticlesList;
