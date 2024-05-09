@@ -5,9 +5,7 @@ import Header from './components/Header.jsx';
 import Footer from './components/Footer.jsx';
 import ArticlesList from './components/ArticlesList.jsx';
 import IndividualArticleCard from './components/ArticleCard.jsx';
-import CodingArticles from './components/CodingArticles.jsx';
-import FootballArticles from './components/FootballArticles.jsx';
-import CookingArticles from './components/CookingArticles.jsx';
+import TopicArticlesList from './components/TopicArticlesList.jsx'; 
 import NavigationButtons from './components/NavigationButtons.jsx';
 
 function App() {
@@ -24,9 +22,9 @@ function App() {
           <Routes>
             <Route path="/" element={<ArticlesList />} />
             <Route path="/article/:id" element={<IndividualArticleCard />} />
-            <Route path="/coding" element={<CodingArticles />} /> 
-            <Route path="/football" element={<FootballArticles />} /> 
-            <Route path="/cooking" element={<CookingArticles />} /> 
+            <Route path="/cooking" element={<TopicArticlesList topic="cooking" />} />
+            <Route path="/coding" element={<TopicArticlesList topic="coding" />} />
+            <Route path="/football" element={<TopicArticlesList topic="football" />} />
           </Routes>
         </div>
         <div className="footer">
