@@ -24,15 +24,31 @@ function IndividualArticleCard() {
   const [loggedInUsername, setLoggedInUsername] = useState('happyamy2016');
   const [deletedComment, setDeletedComment] = useState(false);
 
-  useEffect(() => {
-    Promise.all([fetchArticleById(id), fetchCommentsById(id), getArticleVotes(id)])
-      .then(([article, comments, votes]) => {
+ useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const article = await fetchArticleById(id);
         setArticle(article);
+        const comments = await fetchCommentsById(id);
         setArticleComments(comments);
+        const votes = await getArticleVotes(id);
         setCurrentVotes(votes.votes);
+      } catch (error) {
+        if (axios.isAxiosError(error) && error.response?.status === 404) {
+          console.error('Error fetching article (404):', error.response.data);
+          // Set appropriate state for 404 handling (e.g., setArticle to null)
+          setArticle(null);
+        } else {
+          console.error('Error fetching article:', error);
+          // Handle other errors (network errors, etc.)
+          // ... (Optional) ...
+        }
+      } finally {
         setLoading(false);
-      })
-      .catch((error) => console.error(error));
+      }
+    };
+
+    fetchData();
   }, [id]);
 
   const toggleComments = () => {
@@ -107,7 +123,7 @@ function IndividualArticleCard() {
     <div>
       {loading ? (
         <h4>Loading news article...</h4>
-      ) : (
+      ) : article ? (
         <div className="single-article">
           <h2>{article.title}</h2>
           {article.article_img_url && <img src={article.article_img_url} alt={article.title} />}
@@ -116,6 +132,9 @@ function IndividualArticleCard() {
           <p>Published: {article.created_at}</p>
           <p>Votes: {currentVotes}</p>
           <p>Comment Count: {article.comment_count}</p>
+
+
+          
           <div className="voting-buttons" style={{ width: '150px' }}> 
             {userVote === 'up' ? (
               <button className={`vote-button upvoted`} onClick={() => handleVote('up')}>
@@ -159,7 +178,6 @@ function IndividualArticleCard() {
                   </li>
                 ))}
               </ul>
-
               {commentSubmitted ? (
                 <p>Thank you for your comment!</p>
               ) : (
@@ -191,9 +209,14 @@ function IndividualArticleCard() {
             </div>
           )}
         </div>
+      ) : (
+        <div>
+          <h2>Article Not Found</h2>
+          <p>Nobody here, man!</p>
+        </div>
       )}
     </div>
+    
   );
 }
-
 export default IndividualArticleCard;
