@@ -6,6 +6,7 @@ import CommentCard from './CommentsCard';
 import { getArticleVotes } from '../utils/getArticleVotesApi';
 import updateVotes from '../utils/updateVotesApi';
 import { postComment } from '../utils/postComment';
+import { deleteComment } from '../utils/deleteComment';
 
 function IndividualArticleCard() {
   const { id } = useParams();
@@ -20,6 +21,8 @@ function IndividualArticleCard() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [commentSubmitted, setCommentSubmitted] = useState(false); 
+  const [loggedInUsername, setLoggedInUsername] = useState('happyamy2016');
+  const [deletedComment, setDeletedComment] = useState(false);
 
   useEffect(() => {
     Promise.all([fetchArticleById(id), fetchCommentsById(id), getArticleVotes(id)])
@@ -35,6 +38,24 @@ function IndividualArticleCard() {
   const toggleComments = () => {
     setShowComments(!showComments);
   };
+
+  const handleDeleteComment = async (comment, commentId, articleId) => {
+    if (comment.author !== loggedInUsername) {
+      setErrorMessage('You can only delete comments you authored.');
+      return;
+    }
+
+    try {
+      await deleteComment(commentId, articleId); 
+      const updatedComments = await fetchCommentsById(articleId); 
+      setArticleComments(updatedComments);
+      setDeletedComment(true);
+    } catch (error) {
+      console.error(error);
+      setErrorMessage('Error deleting comment. Please try again later.');
+    }
+  };
+
 
   const handleVote = async (voteType) => {
     try {
@@ -116,14 +137,26 @@ function IndividualArticleCard() {
             )}
           </div>
           <button className="toggle-button" onClick={toggleComments}>
-            {showComments ? 'Hide Comments 🫣 ' : 'Show Comments🔎'}
+            {showComments ? 'Hide Comments 🫣 ' : 'Show Comments'}
           </button>
+          {deletedComment ? (
+            <p>You have deleted your previous comment, bye bye!</p>
+          ) : null}
           {showComments && (
             <div className="comments">
               <h3>Comments</h3>
               <ul>
                 {articleComments.map((comment) => (
-                  <CommentCard key={comment.comment_id} comment={comment} />
+                  <li key={comment.comment_id}>
+                    <div className="comment-actions">
+                      {comment.author === loggedInUsername && (
+                        <button className="delete-button" onClick={() => handleDeleteComment(comment, comment.comment_id, id)}>
+                          ❌ Delete
+                        </button>
+                      )}
+                      <CommentCard comment={comment} />
+                    </div>
+                  </li>
                 ))}
               </ul>
 
@@ -155,7 +188,6 @@ function IndividualArticleCard() {
                   </button>
                 </form>
               )}
-
             </div>
           )}
         </div>
