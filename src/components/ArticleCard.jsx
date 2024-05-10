@@ -36,12 +36,9 @@ function IndividualArticleCard() {
       } catch (error) {
         if (axios.isAxiosError(error) && error.response?.status === 404) {
           console.error('Error fetching article (404):', error.response.data);
-          // Set appropriate state for 404 handling (e.g., setArticle to null)
           setArticle(null);
         } else {
           console.error('Error fetching article:', error);
-          // Handle other errors (network errors, etc.)
-          // ... (Optional) ...
         }
       } finally {
         setLoading(false);
@@ -60,7 +57,6 @@ function IndividualArticleCard() {
       setErrorMessage('You can only delete comments you authored.');
       return;
     }
-
     try {
       await deleteComment(commentId, articleId); 
       const updatedComments = await fetchCommentsById(articleId); 
@@ -211,8 +207,8 @@ function IndividualArticleCard() {
         </div>
       ) : (
         <div>
-          <h2>Article Not Found</h2>
-          <p>Nobody here, man!</p>
+          <h2>404 - Article Not Found</h2>
+          <p>Sorry, this article doesn't exist!</p>
         </div>
       )}
     </div>

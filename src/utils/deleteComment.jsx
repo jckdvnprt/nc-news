@@ -5,10 +5,13 @@ export const deleteComment = async (commentId, articleId) => {
     const response = await axios.delete(
       `https://nc-news-xd0a.onrender.com/api/articles/${articleId}/comments/${commentId}`
     );
-    console.log("Comment deleted successfully", response.data);
     return response.data;
   } catch (error) {
-    console.error(`Error deleting comment ${commentId}:`, error);
+    const errorMessage = `Error deleting comment ${commentId}: ${error.message}`;
+    const errorElement = document.createElement("div");
+    errorElement.textContent = errorMessage;
+    document.body.appendChild(errorElement);
+
     throw error;
   }
 };
