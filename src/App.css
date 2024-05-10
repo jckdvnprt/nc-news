@@ -251,3 +251,11 @@ text-align: justify;
   transform: scale(1.1);
 }
 
+.deleting-comment {
+  left: 20; 
+  top: 20px; 
+}
+
+
+
+

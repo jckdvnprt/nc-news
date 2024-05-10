@@ -19,6 +19,7 @@ function IndividualArticleCard() {
   const [newCommentBody, setNewCommentBody] = useState('');
   const [newCommentAuthor, setNewCommentAuthor] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isDeleting, setIsDeleting] =useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [commentSubmitted, setCommentSubmitted] = useState(false); 
   const [loggedInUsername, setLoggedInUsername] = useState('happyamy2016');
@@ -57,6 +58,9 @@ function IndividualArticleCard() {
       setErrorMessage('You can only delete comments you authored.');
       return;
     }
+
+    setIsDeleting(true); 
+
     try {
       await deleteComment(commentId, articleId); 
       const updatedComments = await fetchCommentsById(articleId); 
@@ -65,9 +69,10 @@ function IndividualArticleCard() {
     } catch (error) {
       console.error(error);
       setErrorMessage('Error deleting comment. Please try again later.');
+    } finally {
+      setIsDeleting(false); 
     }
   };
-
 
   const handleVote = async (voteType) => {
     try {
@@ -108,7 +113,7 @@ function IndividualArticleCard() {
       setNewCommentAuthor('');
       setCommentSubmitted(true); 
     } catch (error) {
-      setErrorMessage('Error occurred while submitting comment. Please try again later.');
+      setErrorMessage('Error occurred while submitting comment! Please make sure you are a registered user. Please try again later.');
       console.error(error);
     } finally {
       setIsSubmitting(false);
@@ -117,6 +122,7 @@ function IndividualArticleCard() {
 
   return (
     <div>
+      
       {loading ? (
         <h4>Loading news article...</h4>
       ) : article ? (
@@ -156,7 +162,13 @@ function IndividualArticleCard() {
           </button>
           {deletedComment ? (
             <p>You have deleted your previous comment, bye bye!</p>
-          ) : null}
+                ) : null}
+
+              {isDeleting ? (
+                <h3 className="deleting-comment">Deleting comment...</h3>
+              ) : null}
+
+
           {showComments && (
             <div className="comments">
               <h3>Comments</h3>
